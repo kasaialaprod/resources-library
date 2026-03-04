@@ -29,13 +29,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/auth', authRoutes);
 
 // Route API protégée
-app.get('/api/me/resources', requireAuth, (req, res) => {
+app.get('/api/me/resources', requireAuth, async (req, res) => {
   try {
-    const stmt = db.prepare(
-      'SELECT * FROM resources WHERE user_id = ? ORDER BY created_at DESC'
+    const rows = await db.allAsync(
+      'SELECT * FROM resources WHERE user_id = ? ORDER BY created_at DESC',
+      [req.user.id]
     );
-    const rows = stmt.all(req.user.id);   // ← espace unique: filtré par id de l’utilisateur
-    console.log('rows =', rows);
     res.json(rows);
   } catch (err) {
     console.error('Resources error:', err);
@@ -43,10 +42,8 @@ app.get('/api/me/resources', requireAuth, (req, res) => {
   }
 });
 
-app.post('/api/me/resources', requireAuth, (req, res) => {
+app.post('/api/me/resources', requireAuth, async (req, res) => {
   const { title, url, description } = req.body;
-  console.log('POST /api/me/resources body =', req.body, 'user =', req.user);
-
   if (!title || !url) {
     return res.status(400).json({ error: 'title and url required' });
   }
@@ -54,26 +51,17 @@ app.post('/api/me/resources', requireAuth, (req, res) => {
   try {
     const now = new Date().toISOString();
 
-    const stmt = db.prepare(
-      'INSERT INTO resources (user_id, title, url, description, created_at) VALUES (?, ?, ?, ?, ?)'
+    await db.runAsync(
+      'INSERT INTO resources (user_id, title, url, description, created_at) VALUES (?, ?, ?, ?, ?)',
+      [req.user.id, title, url, description || null, now]
     );
-    const result = stmt.run(
-      req.user.id,
-      title,
-      url,
-      description || null,
-      now
-    );
-    console.log('INSERT result =', result);
 
-    res.status(201).json({
-      id: result.lastInsertRowid,
-      user_id: req.user.id,
-      title,
-      url,
-      description: description || null,
-      created_at: now
-    });
+    const created = await db.getAsync(
+      'SELECT * FROM resources WHERE user_id = ? AND title = ? AND url = ? ORDER BY id DESC LIMIT 1',
+      [req.user.id, title, url]
+    );
+
+    res.status(201).json(created);
   } catch (err) {
     console.error('Insert resource error:', err);
     res.status(500).json({ error: 'Internal server error' });
