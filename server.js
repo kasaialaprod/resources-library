@@ -10,7 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Middlewares globaux
 app.use(cors({
@@ -87,5 +87,5 @@ app.get('/api/me', requireAuth, (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Serveur sur http://localhost:${PORT}/ → index.html`);
+  console.log(`Serveur sur le port ${PORT}/ → index.html`);
 });
