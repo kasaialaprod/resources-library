@@ -18,24 +18,26 @@ toggle.textContent = next === 'dark' ? '☀️' : '🌙';
 });
 
 
-const API_URL = 'http://localhost:3000/api/ressources';
-
+// Base de l’API : en prod = https://slateblue-dog-126964.hostingersite.com
+const API_BASE = window.location.origin;
 
 async function login(event) {
-    event.preventDefault();
-    const username = document.getElementById('login-username').value;
-    const password = document.getElementById('login-password').value;
+  event.preventDefault();
 
-    const response = await fetch('http://localhost:3000/api/auth/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password })
+  const username = document.getElementById('login-username').value;
+  const password = document.getElementById('login-password').value;
+
+  try {
+    const response = await fetch(`${API_BASE}/api/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
     });
 
     if (!response.ok) {
-    const err = await response.json();
-    alert(err.error || 'Erreur login');
-    return;
+      const err = await response.json().catch(() => ({}));
+      alert(err.error || 'Erreur login');
+      return;
     }
 
     const data = await response.json();
@@ -43,8 +45,11 @@ async function login(event) {
     localStorage.setItem('username', data.user.username);
 
     // redirection vers dashboard
-    window.location.href = '/dashboard/index.html'; // adapte chemin
-
+    window.location.href = '/dashboard/index.html'; // adapte si besoin
+  } catch (e) {
+    console.error(e);
+    alert('Erreur de connexion au serveur');
+  }
 }
 
 document.getElementById('login-form').addEventListener('submit', login);

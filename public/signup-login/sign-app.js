@@ -19,11 +19,13 @@ toggle.textContent = next === 'dark' ? '☀️' : '🌙';
 
 
 
-const API_URL = 'http://localhost:3000/api/ressources';
+// Base de l’API : local → http://localhost:3000, prod → https://slateblue-dog-126964.hostingersite.com
+const API_BASE = window.location.origin;
 
 async function register(event) {
   event.preventDefault();
   console.log('Register form submitted');
+
   const formData = {
     email: document.getElementById('register-email').value,
     username: document.getElementById('register-username').value,
@@ -33,35 +35,35 @@ async function register(event) {
   console.log('Form Data:', formData);
 
   try {
-    const response = await fetch('http://localhost:3000/api/auth/register', { 
+    const response = await fetch(`${API_BASE}/api/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)
     });
 
-    
     if (!response.ok) {
-      const errorText = await response.text(); 
+      const errorText = await response.text();
       console.error('Erreur serveur:', response.status, errorText);
-      alert(`Erreur ${response.status}: Echec de l'inscription`);
+      alert(`Erreur ${response.status}: Échec de l'inscription`);
       return;
     }
 
-    const data = await response.json(); 
+    const data = await response.json();
     console.log('Succès:', data);
+
     localStorage.setItem('token', data.token);
-    alert('Registration successful');
     const loggedInUser = data.user ? data.user.username : formData.username;
     alert(`Welcome, ${loggedInUser}!`);
-    window.location.href = '/dashboard';
+
+    window.location.href = '/dashboard/index.html'; // adapte au vrai chemin
   } catch (error) {
     if (error.name === 'SyntaxError') {
       console.error('Réponse non-JSON:', error);
     } else {
       console.error('Erreur réseau:', error);
+      alert('Erreur de connexion au serveur');
     }
   }
 }
-
 
 document.getElementById('register-form').addEventListener('submit', register);

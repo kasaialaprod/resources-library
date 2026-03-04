@@ -16,8 +16,10 @@ localStorage.setItem('theme', next);
 toggle.textContent = next === 'dark' ? '☀️' : '🌙';
 });
 
+
+
 document.addEventListener('DOMContentLoaded', async () => {
-  
+  const API_BASE = window.location.origin;
 
   // Vérif token
   const token = localStorage.getItem('token');
@@ -46,11 +48,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     card.innerHTML = `
       <h3>${r.title ?? ''}</h3>
-      <!--<p class="resource-meta">
-        <span >${r.created_at ?? ''}</span>
-      </p>-->
       <p>${r.description ?? ''}</p>
-      <a href="${r.url ?? '#'}" target="_blank" rel="noopener noreferrer"><button class="btn-small">Voir</button></a>
+      <a href="${r.url ?? '#'}" target="_blank" rel="noopener noreferrer">
+        <button class="btn-small">Voir</button>
+      </a>
     `;
 
     return card;
@@ -59,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Charger les ressources perso
   async function loadResources() {
     try {
-      const res = await fetch('http://localhost:3000/api/me/resources', {
+      const res = await fetch(`${API_BASE}/api/me/resources`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -107,9 +108,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
       }
 
-      const API_BASE = window.location.origin;
-
-      const res = await fetch('${API_BASE}/api/me/resources', {
+      const res = await fetch(`${API_BASE}/api/me/resources`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -125,7 +124,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
 
       const created = await res.json();
-      // Ajoute la nouvelle ressource en haut
       const card = renderResourceCard(created);
       list.prepend(card);
     });
@@ -147,3 +145,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     refreshBtn.addEventListener('click', loadResources);
   }
 });
+
