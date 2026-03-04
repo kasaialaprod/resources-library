@@ -14,7 +14,7 @@ const PORT = 3000;
 
 // Middlewares globaux
 app.use(cors({
-  origin: ['http://127.0.0.1:5500', 'http://localhost:5500','https://resources-library.com'],
+  origin: ['http://127.0.0.1:5500', 'http://localhost:5500','https://resources-library.com','slateblue-dog-126964.hostingersite.com'],
   credentials: true
 }));
 app.use(express.json());
