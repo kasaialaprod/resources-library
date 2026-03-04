@@ -107,7 +107,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
       }
 
-      const res = await fetch('http://localhost:3000/api/me/resources', {
+      const API_BASE = window.location.origin;
+
+      const res = await fetch('${API_BASE}/api/me/resources', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
