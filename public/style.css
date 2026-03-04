@@ -1,0 +1,281 @@
+:root{
+    --bg-page: #f5f3eb;
+    --text-color: #333333;
+    --header-bg: #b19d78;
+    --card-bg: #ffffff;
+    --accent: #2f5d3a;
+}
+
+/* Thème sombre */
+:root[data-theme="dark"]{
+    --bg-page: #151515;
+    --text-color: #f3f3f3;
+    --header-bg: #2a2418;
+    --card-bg: #1f1f1f;
+    --accent: #7fbf7d;
+}
+
+
+*,
+*::before,
+*::after{
+    box-sizing: border-box;
+}
+
+body{
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: var(--bg-page);
+    color: var(--text-color);
+}
+
+/* HEADER */
+
+
+.theme-toggle{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    border: none;
+    background: rgba(255,255,255,0.6);
+    padding: 6px 10px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+
+.site-header{
+    background: var(--header-bg);
+    color: var(--text-color);
+    padding: 40px 20px 60px;
+    text-align: center;
+}
+
+.header-inner{
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.site-header h1{
+    font-size: clamp(2rem, 3vw, 2.7rem);
+    margin: 0 0 10px;
+}
+
+.site-header p{
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    margin: 0 0 20px;
+}
+
+/* BOUTONS GLOBAUX */
+
+.btn-primary,
+.btn-secondary{
+    display: inline-block;
+    padding: 12px 22px;
+    font-size: 1rem;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.btn-primary{
+    background: var(--accent);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.btn-primary:hover{
+    background: #274c30;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+.btn-secondary{
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+}
+
+.btn-secondary:hover{
+    background: #2f5d3a;
+    color: #ffffff;
+}
+
+/* LAYOUT GLOBAL */
+
+main{
+    padding: 40px 20px 60px;
+}
+
+/* SECTION HERO */
+
+.hero{
+    max-width: 1100px;
+    margin: 0 auto 60px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.hero-text{
+    flex: 1 1 320px;
+    min-width: 260px;
+}
+
+.hero-text h2{
+    font-size: clamp(1.6rem, 2.4vw, 2rem);
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.hero-text p{
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.hero-text ul{
+    padding-left: 18px;
+    margin: 0;
+    list-style: disc;
+}
+
+.hero-text li{
+    margin-bottom: 6px;
+}
+
+.hero-image{
+    flex: 1 1 320px;
+    min-width: 260px;
+}
+
+.hero-image img{
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+/* FEATURES */
+
+.features{
+    max-width: 1100px;
+    margin: 0 auto 60px;
+    text-align: center;
+}
+
+.features h2{
+    font-size: clamp(1.6rem, 2.4vw, 2rem);
+    margin-bottom: 25px;
+}
+
+.features-grid{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.feature-card{
+    flex: 1 1 260px;
+    max-width: 340px;
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 20px 18px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+    text-align: left;
+}
+
+.feature-card h3{
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+    color: var(--accent);
+}
+
+.feature-card p{
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.5;
+}
+
+/* CTA FINALE */
+
+.cta{
+    max-width: 1100px;
+    margin: 0 auto 40px;
+}
+
+.cta-card{
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 30px 22px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.cta-card h2{
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: clamp(1.5rem, 2.2vw, 1.9rem);
+}
+
+.cta-card p{
+    margin: 0 0 20px;
+    font-size: 1rem;
+}
+
+.cta-actions{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+
+/* FOOTER */
+
+.site-footer{
+    text-align: center;
+    padding: 18px 10px 22px;
+    font-size: 0.9rem;
+    color: #666666;
+    background: var(--card-bg);
+    border-top: 1px solid #e0ddd3;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px){
+    .site-header{
+        padding: 30px 16px 40px;
+    }
+
+    main{
+        padding: 30px 16px 40px;
+    }
+
+    .hero{
+        gap: 24px;
+    }
+
+    .hero-text,
+    .hero-image{
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 480px){
+    .cta-card{
+        padding: 24px 16px;
+    }
+
+    .feature-card{
+        padding: 18px 14px;
+    }
+}

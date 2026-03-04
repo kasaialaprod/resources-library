@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Tableau de bord</title>
+</head>
+<body>
+  <!-- Bouton thème -->
+  <button class="theme-toggle" id="theme-toggle">
+    🌙 Mode sombre
+  </button>
+
+  <!-- HEADER réutilisé comme barre de titre du dashboard -->
+  <header class="site-header">
+    <div class="header-inner">
+      <h1>Votre espace personnel</h1>
+      <p>Retrouvez un aperçu rapide de vos ressources et de votre activité.</p>
+
+      <div class="cta-actions">
+        <button class="btn-secondary" id="logout-btn">Déconnexion</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-text">
+        <h2>Vue d’ensemble</h2>
+        <p>
+          Bienvenue <strong id="username"></strong> !
+        </p>
+      </div>
+
+      <div class="hero-image">
+        <img src="../asset/image/bibliotheque.webp" alt="Illustration dashboard" />
+      </div>
+    </section>
+
+    <section class="features">
+      <h2>Ressources ajoutées</h2>
+      <div class="features-grid" id="resources-list">
+      </div>
+      <a href="#" class="btn-primary" id="btn-new-resource">+ Nouvelle ressource</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Dashboard – Ressources &copy; 2026</p>
+  </footer>
+    <script src="app.js"></script>
+</body>
+</html>
